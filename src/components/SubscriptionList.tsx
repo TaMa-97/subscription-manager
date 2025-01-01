@@ -1,17 +1,17 @@
-import React from 'react';
-import styled from 'styled-components';
-import { format } from 'date-fns';
-import { ja } from 'date-fns/locale';
-import { Edit2, Trash2, CreditCard } from 'lucide-react';
-import { Subscription } from '../types/subscription';
-import { Button } from './styled/Common';
+import React from "react";
+import styled from "styled-components";
+import { format } from "date-fns";
+import { ja } from "date-fns/locale";
+import { Edit2, Trash2 } from "lucide-react";
+import { Subscription } from "../types/subscription";
+import { Button } from "./styled/Common";
 
 const Container = styled.div`
   margin-top: 2rem;
 `;
 
 const TotalAmount = styled.div`
-  background: linear-gradient(135deg, #4A90E2 0%, #357ABD 100%);
+  background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
   color: white;
   padding: 2rem;
   border-radius: 1rem;
@@ -52,13 +52,13 @@ const Card = styled.div`
 const ServiceName = styled.h3`
   font-size: 1.25rem;
   margin: 0 0 1rem 0;
-  color: #2D3748;
+  color: #2d3748;
 `;
 
 const Price = styled.div`
   font-size: 1.5rem;
   font-weight: bold;
-  color: #4A90E2;
+  color: #4a90e2;
   margin-bottom: 1rem;
 `;
 
@@ -92,7 +92,10 @@ export const SubscriptionList: React.FC<Props> = ({
   onEdit,
   onDelete,
 }) => {
-  const totalAmount = subscriptions.reduce((sum, sub) => sum + sub.monthlyPrice, 0);
+  const totalAmount = subscriptions.reduce((sum, sub) => {
+    const price = typeof sub.monthly_price === "number" ? sub.monthly_price : 0;
+    return sum + price;
+  }, 0);
 
   return (
     <Container>
@@ -105,18 +108,20 @@ export const SubscriptionList: React.FC<Props> = ({
         {subscriptions.map((subscription) => (
           <Card key={subscription.id}>
             <ServiceName>{subscription.name}</ServiceName>
-            <Price>¥{subscription.monthlyPrice.toLocaleString()}/月</Price>
+            <Price>
+              ¥{(subscription.monthly_price || 0).toLocaleString()}/月
+            </Price>
             <Info>
               <div>
-                開始日: {format(new Date(subscription.startDate), 'yyyy年M月d日', { locale: ja })}
+                開始日:{" "}
+                {format(new Date(subscription.start_date), "yyyy年M月d日", {
+                  locale: ja,
+                })}
               </div>
               {subscription.memo && <div>メモ: {subscription.memo}</div>}
             </Info>
             <Actions>
-              <IconButton
-                onClick={() => onEdit(subscription)}
-                title="編集"
-              >
+              <IconButton onClick={() => onEdit(subscription)} title="編集">
                 <Edit2 size={18} />
               </IconButton>
               <IconButton
