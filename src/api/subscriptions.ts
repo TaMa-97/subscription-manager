@@ -1,25 +1,46 @@
-import axios from 'axios';
+import { supabase } from '../config/supabase';
 import { Subscription, SubscriptionFormData } from '../types/subscription';
-
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
 
 export const subscriptionApi = {
   getAll: async (): Promise<Subscription[]> => {
-    const response = await axios.get(`${API_BASE_URL}/subscriptions`);
-    return response.data;
+    const { data, error } = await supabase
+      .from('subscriptions')
+      .select('*')
+      .order('created_at', { ascending: false });
+
+    if (error) throw error;
+    return data || [];
   },
 
   create: async (data: SubscriptionFormData): Promise<Subscription> => {
-    const response = await axios.post(`${API_BASE_URL}/subscriptions`, data);
-    return response.data;
+    const { data: newSubscription, error } = await supabase
+      .from('subscriptions')
+      .insert(data)
+      .select()
+      .single();
+
+    if (error) throw error;
+    return newSubscription;
   },
 
   update: async (id: string, data: Partial<SubscriptionFormData>): Promise<Subscription> => {
-    const response = await axios.patch(`${API_BASE_URL}/subscriptions/${id}`, data);
-    return response.data;
+    const { data: updatedSubscription, error } = await supabase
+      .from('subscriptions')
+      .update(data)
+      .eq('id', id)
+      .select()
+      .single();
+
+    if (error) throw error;
+    return updatedSubscription;
   },
 
   delete: async (id: string): Promise<void> => {
-    await axios.delete(`${API_BASE_URL}/subscriptions/${id}`);
+    const { error } = await supabase
+      .from('subscriptions')
+      .delete()
+      .eq('id', id);
+
+    if (error) throw error;
   },
 };
