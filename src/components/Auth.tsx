@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { Lock, Mail } from "lucide-react";
+import { Lock, Mail, CreditCard } from "lucide-react";
 import { supabase } from "../config/supabase";
 import { Button, Input } from "./styled/Common";
 
@@ -22,8 +22,21 @@ const AuthCard = styled.div`
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
 `;
 
+const LogoContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2rem;
+`;
+
+const Logo = styled(CreditCard)`
+  color: #4a90e2;
+  width: 48px;
+  height: 48px;
+`;
+
 const Title = styled.h1`
-  font-size: 1.875rem;
+  font-size: 1.5rem;
   color: #2d3748;
   margin: 0 0 2rem;
   text-align: center;
@@ -74,6 +87,10 @@ const ErrorMessage = styled.div`
   font-size: 0.875rem;
   margin-top: 0.5rem;
   text-align: center;
+  background: #fff5f5;
+  padding: 0.5rem;
+  border-radius: 0.375rem;
+  border: 1px solid #feb2b2;
 `;
 
 const LoginButton = styled(Button)`
@@ -81,6 +98,26 @@ const LoginButton = styled(Button)`
   font-size: 1rem;
   font-weight: 600;
   width: 100%;
+  background: #4a90e2;
+  border-radius: 0.5rem;
+  transition: all 0.2s;
+
+  &:hover {
+    background: #2563eb;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px rgba(74, 144, 226, 0.2);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  &:disabled {
+    background: #cbd5e0;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
 `;
 
 export const Auth: React.FC = () => {
@@ -111,6 +148,9 @@ export const Auth: React.FC = () => {
   return (
     <AuthContainer>
       <AuthCard>
+        <LogoContainer>
+          <Logo />
+        </LogoContainer>
         <Title>サブスクリプション管理</Title>
         <Form onSubmit={handleSubmit}>
           <InputGroup>
