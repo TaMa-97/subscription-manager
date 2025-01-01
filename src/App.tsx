@@ -14,16 +14,26 @@ import type { User } from "@supabase/supabase-js";
 const Container = styled.div`
   max-width: 1200px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 1rem;
   min-height: 100vh;
   background: #f7fafc;
+
+  @media (min-width: 640px) {
+    padding: 2rem;
+  }
 `;
 
 const Header = styled.header`
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  flex-direction: column;
+  gap: 1rem;
   margin-bottom: 2rem;
+
+  @media (min-width: 640px) {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
 `;
 
 const TitleWrapper = styled.div`
@@ -33,22 +43,41 @@ const TitleWrapper = styled.div`
 `;
 
 const Title = styled.h1`
-  font-size: 1.875rem;
+  font-size: 1.5rem;
   color: #2d3748;
   margin: 0;
   font-weight: bold;
+
+  @media (min-width: 640px) {
+    font-size: 1.875rem;
+  }
 `;
 
 const TitleIcon = styled(CreditCard)`
   color: #4a90e2;
+  min-width: 24px;
+  width: 24px;
+  height: 24px;
+
+  @media (min-width: 640px) {
+    min-width: 32px;
+    width: 32px;
+    height: 32px;
+  }
 `;
 
 const AddButton = styled(Button)`
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
   padding: 0.75rem 1.5rem;
   font-size: 1rem;
+  width: 100%;
+
+  @media (min-width: 640px) {
+    width: auto;
+  }
 `;
 
 const LoadingContainer = styled.div`
