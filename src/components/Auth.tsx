@@ -163,6 +163,7 @@ export const Auth: React.FC = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
+              autoComplete="username"
             />
           </InputGroup>
           <InputGroup>
@@ -175,6 +176,7 @@ export const Auth: React.FC = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
+              autoComplete="current-password"
             />
           </InputGroup>
           {error && <ErrorMessage>{error}</ErrorMessage>}
