@@ -6,6 +6,7 @@ import { Modal } from "./components/Modal";
 import { SubscriptionForm } from "./components/SubscriptionForm";
 import { SubscriptionList } from "./components/SubscriptionList";
 import { Auth } from "./components/Auth";
+import { UserMenu } from "./components/UserMenu";
 import { supabase } from "./config/supabase";
 import { Subscription, SubscriptionFormData } from "./types/subscription";
 import { subscriptionApi } from "./api/subscriptions";
@@ -36,7 +37,13 @@ const Header = styled.header`
   }
 `;
 
-const TitleWrapper = styled.div`
+const HeaderLeft = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+`;
+
+const HeaderRight = styled.div`
   display: flex;
   align-items: center;
   gap: 1rem;
@@ -99,55 +106,60 @@ function App() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    // 現在のセッションを確認
     supabase.auth.getSession().then(({ data: { session } }) => {
       setUser(session?.user ?? null);
-      if (session?.user) {
-        loadSubscriptions();
-      }
       setLoading(false);
     });
 
+    // 認証状態の変更を監視
     const {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null);
-      if (session?.user) {
-        loadSubscriptions();
-      } else {
-        setSubscriptions([]);
-      }
+      setLoading(false);
     });
 
     return () => subscription.unsubscribe();
   }, []);
+
+  useEffect(() => {
+    if (user) {
+      loadSubscriptions();
+    }
+  }, [user]);
 
   const loadSubscriptions = async () => {
     try {
       const data = await subscriptionApi.getAll();
       setSubscriptions(data);
     } catch (error) {
-      console.error("Failed to load subscriptions:", error);
+      console.error("Error loading subscriptions:", error);
     }
   };
 
   const handleSubmit = async (data: SubscriptionFormData) => {
     try {
       if (editingSubscription) {
-        const updated = await subscriptionApi.update(
+        // 編集モード
+        const updatedSubscription = await subscriptionApi.update(
           editingSubscription.id,
           data
         );
-        setSubscriptions((subs) =>
-          subs.map((sub) => (sub.id === editingSubscription.id ? updated : sub))
+        setSubscriptions(
+          subscriptions.map((sub) =>
+            sub.id === editingSubscription.id ? updatedSubscription : sub
+          )
         );
         setEditingSubscription(null);
       } else {
+        // 新規登録モード
         const newSubscription = await subscriptionApi.create(data);
-        setSubscriptions((subs) => [...subs, newSubscription]);
+        setSubscriptions([newSubscription, ...subscriptions]);
       }
       setIsModalOpen(false);
     } catch (error) {
-      console.error("Failed to save subscription:", error);
+      console.error("Error saving subscription:", error);
     }
   };
 
@@ -162,7 +174,7 @@ function App() {
         await subscriptionApi.delete(id);
         setSubscriptions(subscriptions.filter((sub) => sub.id !== id));
       } catch (error) {
-        console.error("Failed to delete subscription:", error);
+        console.error("Error deleting subscription:", error);
       }
     }
   };
@@ -183,14 +195,17 @@ function App() {
   return (
     <Container>
       <Header>
-        <TitleWrapper>
-          <TitleIcon size={32} />
+        <HeaderLeft>
+          <TitleIcon />
           <Title>サブスクリプション管理</Title>
-        </TitleWrapper>
-        <AddButton variant="primary" onClick={() => setIsModalOpen(true)}>
-          <Plus size={20} />
-          新規登録
-        </AddButton>
+        </HeaderLeft>
+        <HeaderRight>
+          <AddButton variant="primary" onClick={() => setIsModalOpen(true)}>
+            <Plus size={20} />
+            新規登録
+          </AddButton>
+          <UserMenu email={user.email || ""} />
+        </HeaderRight>
       </Header>
 
       <SubscriptionList
