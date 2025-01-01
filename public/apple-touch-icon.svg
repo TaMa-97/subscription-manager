@@ -1,6 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <svg width="180" height="180" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
   <rect width="180" height="180" rx="45" fill="#4A90E2"/>
-  <path d="M45 71.25C45 67.1079 48.3579 63.75 52.5 63.75H127.5C131.642 63.75 135 67.1079 135 71.25V108.75C135 112.892 131.642 116.25 127.5 116.25H52.5C48.3579 116.25 45 112.892 45 108.75V71.25Z" stroke="white" stroke-width="7.5"/>
-  <path d="M45 86.25H135" stroke="white" stroke-width="7.5"/>
+  <path d="M45 71C45 66.5817 48.5817 63 53 63H127C131.418 63 135 66.5817 135 71V109C135 113.418 131.418 117 127 117H53C48.5817 117 45 113.418 45 109V71Z" stroke="white" stroke-width="8"/>
+  <path d="M45 86H135" stroke="white" stroke-width="8"/>
 </svg>
