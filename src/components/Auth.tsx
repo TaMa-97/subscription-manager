@@ -151,7 +151,7 @@ export const Auth: React.FC = () => {
         <LogoContainer>
           <Logo />
         </LogoContainer>
-        <Title>サブスクリプション管理</Title>
+        <Title>固定費管理</Title>
         <Form onSubmit={handleSubmit}>
           <InputGroup>
             <Icon>

@@ -169,7 +169,7 @@ function App() {
   };
 
   const handleDelete = async (id: string) => {
-    if (window.confirm("このサブスクリプションを削除してもよろしいですか？")) {
+    if (window.confirm("この固定費を削除してもよろしいですか？")) {
       try {
         await subscriptionApi.delete(id);
         setSubscriptions(subscriptions.filter((sub) => sub.id !== id));
@@ -197,7 +197,7 @@ function App() {
       <Header>
         <HeaderLeft>
           <TitleIcon />
-          <Title>サブスクリプション管理</Title>
+          <Title>固定費管理</Title>
         </HeaderLeft>
         <HeaderRight>
           <AddButton variant="primary" onClick={() => setIsModalOpen(true)}>
@@ -217,11 +217,7 @@ function App() {
       <Modal
         isOpen={isModalOpen}
         onClose={handleModalClose}
-        title={
-          editingSubscription
-            ? "サブスクリプション編集"
-            : "サブスクリプション登録"
-        }
+        title={editingSubscription ? "固定費編集" : "固定費登録"}
       >
         <SubscriptionForm
           onSubmit={handleSubmit}

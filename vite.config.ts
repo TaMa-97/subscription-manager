@@ -9,9 +9,9 @@ export default defineConfig({
       registerType: "autoUpdate",
       includeAssets: ["favicon.ico", "robots.txt", "apple-touch-icon.png"],
       manifest: {
-        name: "サブスクリプション管理",
+        name: "固定費管理",
         short_name: "サブスク管理",
-        description: "個人用のサブスクリプション管理ツール",
+        description: "個人用の固定費管理ツール",
         theme_color: "#4A90E2",
         background_color: "#F7FAFC",
         icons: [

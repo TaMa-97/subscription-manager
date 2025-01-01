@@ -146,7 +146,7 @@ export const SubscriptionForm: React.FC<Props> = ({
   return (
     <StyledForm onSubmit={handleSubmit(onSubmit)}>
       <FormGroup>
-        <label htmlFor="name">サブスクリプション名</label>
+        <label htmlFor="name">固定費名</label>
         <Input id="name" type="text" {...register("name")} />
         {errors.name && <ErrorMessage>{errors.name.message}</ErrorMessage>}
       </FormGroup>
