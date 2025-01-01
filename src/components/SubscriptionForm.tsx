@@ -173,9 +173,13 @@ export const SubscriptionForm: React.FC<Props> = ({
               <>
                 <DatePicker
                   selected={field.value ? new Date(field.value) : null}
-                  onChange={(date: Date) =>
-                    field.onChange(date.toISOString().split("T")[0])
-                  }
+                  onChange={(date: Date) => {
+                    // タイムゾーンを考慮した日付文字列を生成
+                    const localDate = new Date(
+                      date.getTime() - date.getTimezoneOffset() * 60000
+                    );
+                    field.onChange(localDate.toISOString().split("T")[0]);
+                  }}
                   dateFormat="yyyy/MM/dd"
                   locale={ja}
                   customInput={<StyledInput />}
