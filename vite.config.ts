@@ -7,7 +7,7 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: "autoUpdate",
-      includeAssets: ["favicon.ico", "robots.txt", "apple-touch-icon.svg"],
+      includeAssets: ["favicon.ico", "robots.txt", "apple-touch-icon.png"],
       manifest: {
         name: "サブスクリプション管理",
         short_name: "サブスク管理",
@@ -16,19 +16,19 @@ export default defineConfig({
         background_color: "#F7FAFC",
         icons: [
           {
-            src: "pwa-192x192.svg",
+            src: "pwa-192x192.png",
             sizes: "192x192",
-            type: "image/svg+xml",
+            type: "image/png",
           },
           {
-            src: "pwa-512x512.svg",
+            src: "pwa-512x512.png",
             sizes: "512x512",
-            type: "image/svg+xml",
+            type: "image/png",
           },
           {
-            src: "pwa-512x512.svg",
+            src: "pwa-512x512.png",
             sizes: "512x512",
-            type: "image/svg+xml",
+            type: "image/png",
             purpose: "maskable",
           },
         ],
