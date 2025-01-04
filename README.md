@@ -2,6 +2,8 @@
 
 個人用の固定費管理ツール（ミニマム）
 
+![image](https://github.com/user-attachments/assets/36c1d25e-5a38-4bb3-9b13-a7019f8bc3b5)
+
 ## 技術スタック
 
 ### 言語/ライブラリ等
